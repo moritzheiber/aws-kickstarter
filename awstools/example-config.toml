@@ -1,0 +1,11 @@
+# If you change this make sure to change it also in the run script
+# as well as the Terraform provider
+defaultRegion = "eu-west-1"
+
+[profiles]
+# You can call these whatever you like, as long as its consistent
+mainAccount = "main-account"
+mainAccountMfaSession = "main-account-mfa"
+
+[accounts]
+main-account = "<your-account-id>"

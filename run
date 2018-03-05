@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -eu -o pipefail
+
+# This needs to correspond with your configuration in
+# awstools/example-config.toml, otherwise the account
+# assumption is going to fail
+export AWS_PROFILE="${AWS_PROFILE:-my-aws-account AdminAccess}"
+
+# This could be any region you prefer, but should probably match
+# with whatever region you choose to use for the backend
+# configuration and the provider
+export AWS_REGION="${AWS_REGION:-eu-central-1}"
+export AWS_DEFAULT_REGION="${AWS_REGION}"
+
+# We are changing directories in a subshell to avoid confusing
+# the main process
+_aws() {
+  (
+    cd aws/
+
+    # Init is necessary on every run to ensure we are using the
+    # version of the provider that's required
+    terraform init
+
+    # Pass all available command line arguments to Terraform directly
+    # This means we are essentially building a Terraform "frontend"
+    terraform "$@"
+  )
+}
+
+usage() {
+    echo "Usage: $0 aws [plan|apply]"
+    exit 0
+}
+
+CMD=${1:-}
+# Shift all arguments by 1 to be able to pass them to Terraform later
+# without our initializer ("aws")
+shift || true
+case ${CMD} in
+  aws) _aws "$@" ;;
+  *) usage ;;
+esac
