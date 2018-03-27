@@ -13,6 +13,16 @@ data "aws_iam_policy_document" "aws_list_iam_users_policy" {
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:*",
     ]
   }
+
+  statement {
+    actions = ["iam:GetUser"]
+
+    resources = [
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/$${aws:username}",
+    ]
+
+    effect = "Allow"
+  }
 }
 
 resource "aws_iam_policy" "aws_list_iam_users" {
