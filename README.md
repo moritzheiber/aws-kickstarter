@@ -6,7 +6,7 @@ Provisioning AWS IAM users/groups/roles/policies and a core AWS VPC setup using 
 
 The following tools are required:
 
-- [Terraform](https://terraform.io) (>= 0.11.3)
+- [Terraform](https://terraform.io) (>= 0.11.8)
 - [awscli](https://aws.amazon.com/cli/) (>= 1.14.21)
 - [awstools](https://github.com/sam701/awstools) (>= 0.13.0)
 - Any [device](https://www.nitrokey.com/) and/or [app](https://f-droid.org/repository/browse/?fdfilter=totp&fdid=net.bierbaumer.otp_authenticator) that supports 2FA/TOTP
@@ -35,7 +35,7 @@ For the `AWS Access Key ID` and `AWS Secret Access Key` use the values you've ju
 You can now run the `run` script to provision all the resouces in this kickstarter:
 
 ```sh
-$ AWS_PROFILE="root-account" ./run aws apply
+$ AWS_PROFILE="root-account" ./run terraform apply
 ```
 
 It should show you up to 50 resources. Enter `yes` to let Terraform do its work.
@@ -129,7 +129,7 @@ $ awstools assume main-account AdminAccess
 and then run:
 
 ```sh
-$ AWS_PROFILE="main-account AdminAccess" ./run aws apply
+$ AWS_PROFILE="main-account AdminAccess" ./run terraform apply
 ```
 
 so see what changes Terraform would be proposing for your account. If you're satisfied with the proposal apply it by entering: `yes`
@@ -139,7 +139,7 @@ so see what changes Terraform would be proposing for your account. If you're sat
 You will need `root` account credentials again, because halfway through you are going to remove all the access credentials and user information required to access the APIs. Once you have a valid access key and secret access key for your root account again (to obtain them run through the same steps again above) just run:
 
 ```sh
-$ AWS_PROFILE="root-account" ./run aws destroy
+$ AWS_PROFILE="root-account" ./run terraform destroy
 ```
 
 Terraform will ask you for confirmation again at the end. Answer with `yes`.
