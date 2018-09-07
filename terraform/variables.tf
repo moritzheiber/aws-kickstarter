@@ -1,6 +1,6 @@
 provider "aws" {
   region  = "eu-west-1"
-  version = "~> 1.34"
+  version = "~> 1.35"
 }
 
 data "aws_availability_zones" "available" {}
@@ -9,7 +9,7 @@ data "aws_caller_identity" "current" {}
 
 variable "vpc_cidr_range" {
   type    = "string"
-  default = "10.0.0.0/8"
+  default = "10.0.0.0/16"
 }
 
 variable "public_subnet_cidrs" {

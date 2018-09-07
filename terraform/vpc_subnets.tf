@@ -20,7 +20,7 @@ resource "aws_subnet" "public_subnet" {
   map_public_ip_on_launch = true
 
   tags {
-    Name     = "core_public_subnet_${replace(data.aws_availability_zones.available.names[count.index], -,_)}"
+    Name     = "core_public_subnet_${replace(data.aws_availability_zones.available.names[count.index], "-", "_")}"
     Resource = "core"
     Scope    = "public"
   }
@@ -34,7 +34,7 @@ resource "aws_subnet" "private_subnet" {
   availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
 
   tags {
-    Name     = "core_private_subnet_${replace(data.aws_availability_zones.available.names[count.index], -,_)}"
+    Name     = "core_private_subnet_${replace(data.aws_availability_zones.available.names[count.index], "-", "_")}"
     Resource = "core"
     Scope    = "private"
   }
@@ -84,7 +84,7 @@ resource "aws_route_table" "core_private_route_table" {
   vpc_id = "${aws_vpc.core.id}"
 
   tags {
-    Name     = "core_private_route_table_${replace(data.aws_availability_zones.available.names[count.index], -,_)}"
+    Name     = "core_private_route_table_${replace(data.aws_availability_zones.available.names[count.index], "-", "_")}"
     Resource = "core"
   }
 }
