@@ -58,7 +58,7 @@ You are now all set and should be able to log into the same web console with you
 
 **Before you go, please deactivate the Access Key you created earlier under "My Security Credentials"**. In the future you can use your "admin" user to manage any and all resources inside your account.
 
-_Note: You can provision user login profifes using Terraform and GPG keys without having to set passwords manually. For more information please refer to the [Terraform documentation for aws\_iam\_login\_profile](https://www.terraform.io/docs/providers/aws/r/iam_user_login_profile.html)._
+_Note: You can provision user login profiles using Terraform and GPG keys without having to set passwords manually. For more information please refer to the [Terraform documentation for aws\_iam\_login\_profile](https://www.terraform.io/docs/providers/aws/r/iam_user_login_profile.html)._
 
 ### Initial user setup and user console access
 
