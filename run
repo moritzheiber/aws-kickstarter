@@ -5,7 +5,7 @@ set -Eeu -o pipefail
 # This needs to correspond with your configuration in
 # awstools/example-config.toml, otherwise the account
 # assumption is going to fail
-AWS_PROFILE="${AWS_PROFILE:-my-aws-account AdminAccess}"
+AWS_PROFILE="${AWS_PROFILE:-main-account AdminAccess}"
 
 # This could be any region you prefer, but should probably match
 # with whatever region you choose to use for the backend
