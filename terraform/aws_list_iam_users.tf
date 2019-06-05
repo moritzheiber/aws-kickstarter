@@ -30,5 +30,6 @@ resource "aws_iam_policy" "aws_list_iam_users" {
   path        = "/"
   description = "Let users see the list of users"
 
-  policy = "${data.aws_iam_policy_document.aws_list_iam_users_policy.json}"
+  policy = data.aws_iam_policy_document.aws_list_iam_users_policy.json
 }
+

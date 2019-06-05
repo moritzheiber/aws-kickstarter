@@ -6,10 +6,11 @@ resource "aws_s3_bucket" "terraform_backend_store" {
   bucket = "terraform-backend-store-${data.aws_caller_identity.current.account_id}"
 
   acl    = "private"
-  region = "${data.aws_region.current.name}"
+  region = data.aws_region.current.name
 
-  tags {
+  tags = {
     Name        = "Resource"
     Environment = "terraform"
   }
 }
+

@@ -1,11 +1,11 @@
 # VPC
 
 resource "aws_vpc" "core" {
-  cidr_block           = "${var.vpc_cidr_range}"
+  cidr_block           = var.vpc_cidr_range
   enable_dns_support   = true
   enable_dns_hostnames = true
 
-  tags {
+  tags = {
     Name     = "core_vpc"
     Resource = "core"
   }
@@ -13,14 +13,18 @@ resource "aws_vpc" "core" {
 
 # Subnets
 resource "aws_subnet" "public_subnet" {
-  count                   = "${length(data.aws_availability_zones.available.names)}"
-  vpc_id                  = "${aws_vpc.core.id}"
-  cidr_block              = "${var.public_subnet_cidrs[count.index]}"
-  availability_zone       = "${data.aws_availability_zones.available.names[count.index]}"
+  count                   = length(data.aws_availability_zones.available.names)
+  vpc_id                  = aws_vpc.core.id
+  cidr_block              = var.public_subnet_cidrs[count.index]
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
 
-  tags {
-    Name     = "core_public_subnet_${replace(data.aws_availability_zones.available.names[count.index], "-", "_")}"
+  tags = {
+    Name = "core_public_subnet_${replace(
+      data.aws_availability_zones.available.names[count.index],
+      "-",
+      "_",
+    )}"
     Resource = "core"
     Scope    = "public"
   }
@@ -28,13 +32,17 @@ resource "aws_subnet" "public_subnet" {
 
 # Private subnets
 resource "aws_subnet" "private_subnet" {
-  count             = "${length(data.aws_availability_zones.available.names)}"
-  vpc_id            = "${aws_vpc.core.id}"
-  cidr_block        = "${var.private_subnet_cidrs[count.index]}"
-  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+  count             = length(data.aws_availability_zones.available.names)
+  vpc_id            = aws_vpc.core.id
+  cidr_block        = var.private_subnet_cidrs[count.index]
+  availability_zone = data.aws_availability_zones.available.names[count.index]
 
-  tags {
-    Name     = "core_private_subnet_${replace(data.aws_availability_zones.available.names[count.index], "-", "_")}"
+  tags = {
+    Name = "core_private_subnet_${replace(
+      data.aws_availability_zones.available.names[count.index],
+      "-",
+      "_",
+    )}"
     Resource = "core"
     Scope    = "private"
   }
@@ -42,9 +50,9 @@ resource "aws_subnet" "private_subnet" {
 
 # IGW - Internet Gateway
 resource "aws_internet_gateway" "core_igw" {
-  vpc_id = "${aws_vpc.core.id}"
+  vpc_id = aws_vpc.core.id
 
-  tags {
+  tags = {
     Name     = "core_igw"
     Resource = "core"
   }
@@ -52,58 +60,63 @@ resource "aws_internet_gateway" "core_igw" {
 
 # EIPs for NAT Gateway
 resource "aws_eip" "core_nat_gw_eip" {
-  count = "${length(data.aws_availability_zones.available.names)}"
+  count = length(data.aws_availability_zones.available.names)
   vpc   = true
 }
 
 # NAT Gateways for private subnets
 resource "aws_nat_gateway" "core_nat_gw" {
-  count         = "${length(data.aws_availability_zones.available.names)}"
-  subnet_id     = "${aws_subnet.private_subnet.*.id[count.index]}"
-  allocation_id = "${aws_eip.core_nat_gw_eip.*.id[count.index]}"
+  count         = length(data.aws_availability_zones.available.names)
+  subnet_id     = aws_subnet.private_subnet[count.index].id
+  allocation_id = aws_eip.core_nat_gw_eip[count.index].id
 }
 
 # Routes
 resource "aws_route_table" "core_main_route_table" {
-  vpc_id = "${aws_vpc.core.id}"
+  vpc_id = aws_vpc.core.id
 
-  tags {
+  tags = {
     Name     = "core_main_route_table"
     Resource = "core"
   }
 }
 
 resource "aws_route" "core_private_default_route_a" {
-  route_table_id         = "${aws_route_table.core_main_route_table.id}"
+  route_table_id         = aws_route_table.core_main_route_table.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.core_igw.id}"
+  gateway_id             = aws_internet_gateway.core_igw.id
 }
 
 resource "aws_route_table" "core_private_route_table" {
-  count  = "${length(data.aws_availability_zones.available.names)}"
-  vpc_id = "${aws_vpc.core.id}"
+  count  = length(data.aws_availability_zones.available.names)
+  vpc_id = aws_vpc.core.id
 
-  tags {
-    Name     = "core_private_route_table_${replace(data.aws_availability_zones.available.names[count.index], "-", "_")}"
+  tags = {
+    Name = "core_private_route_table_${replace(
+      data.aws_availability_zones.available.names[count.index],
+      "-",
+      "_",
+    )}"
     Resource = "core"
   }
 }
 
 resource "aws_route" "core_private_default_route" {
-  count                  = "${length(data.aws_availability_zones.available.names)}"
-  route_table_id         = "${aws_route_table.core_private_route_table.*.id[count.index]}"
+  count                  = length(data.aws_availability_zones.available.names)
+  route_table_id         = aws_route_table.core_private_route_table[count.index].id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = "${aws_nat_gateway.core_nat_gw.*.id[count.index]}"
+  nat_gateway_id         = aws_nat_gateway.core_nat_gw[count.index].id
 }
 
 # Route table associations
 resource "aws_main_route_table_association" "core_main_route_table_association" {
-  vpc_id         = "${aws_vpc.core.id}"
-  route_table_id = "${aws_route_table.core_main_route_table.id}"
+  vpc_id         = aws_vpc.core.id
+  route_table_id = aws_route_table.core_main_route_table.id
 }
 
 resource "aws_route_table_association" "core_private_route_table_association" {
-  count          = "${length(data.aws_availability_zones.available.names)}"
-  subnet_id      = "${aws_subnet.private_subnet.*.id[count.index]}"
-  route_table_id = "${aws_route_table.core_private_route_table.*.id[count.index]}"
+  count          = length(data.aws_availability_zones.available.names)
+  subnet_id      = aws_subnet.private_subnet[count.index].id
+  route_table_id = aws_route_table.core_private_route_table[count.index].id
 }
+

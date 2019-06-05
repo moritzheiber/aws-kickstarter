@@ -47,5 +47,6 @@ resource "aws_iam_policy" "aws_mfa_self_service" {
   path        = "/"
   description = "Policy for MFA self service"
 
-  policy = "${data.aws_iam_policy_document.aws_mfa_self_service_policy.json}"
+  policy = data.aws_iam_policy_document.aws_mfa_self_service_policy.json
 }
+

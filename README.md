@@ -4,9 +4,11 @@ Provisioning AWS IAM users/groups/roles/policies and a core AWS VPC setup using 
 
 ## Setup
 
+_Please note: This kickstarter now requires Terraform 0.12!_
+
 The following tools are required:
 
-- [Terraform](https://terraform.io) (>= 0.11.8)
+- [Terraform](https://terraform.io) (**>= 0.12.0**)
 - [awscli](https://aws.amazon.com/cli/) (>= 1.14.21)
 - [awstools](https://github.com/sam701/awstools) (>= 0.13.0)
 - Any [device](https://www.nitrokey.com/) and/or [app](https://f-droid.org/repository/browse/?fdfilter=totp&fdid=net.bierbaumer.otp_authenticator) that supports 2FA/TOTP

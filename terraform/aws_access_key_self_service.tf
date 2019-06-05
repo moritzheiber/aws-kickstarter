@@ -34,5 +34,6 @@ resource "aws_iam_policy" "aws_access_key_self_service" {
   path        = "/"
   description = "Policy for access key self service"
 
-  policy = "${data.aws_iam_policy_document.aws_access_key_self_service_policy.json}"
+  policy = data.aws_iam_policy_document.aws_access_key_self_service_policy.json
 }
+

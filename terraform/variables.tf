@@ -1,19 +1,24 @@
 provider "aws" {
   region  = "eu-west-1"
-  version = "~> 1.35"
+  version = "~> 2.12.0"
 }
 
-data "aws_availability_zones" "available" {}
-data "aws_region" "current" {}
-data "aws_caller_identity" "current" {}
+data "aws_availability_zones" "available" {
+}
+
+data "aws_region" "current" {
+}
+
+data "aws_caller_identity" "current" {
+}
 
 variable "vpc_cidr_range" {
-  type    = "string"
+  type    = string
   default = "10.0.0.0/16"
 }
 
 variable "public_subnet_cidrs" {
-  type = "list"
+  type = list(string)
 
   default = [
     "10.0.0.0/22",
@@ -23,7 +28,7 @@ variable "public_subnet_cidrs" {
 }
 
 variable "private_subnet_cidrs" {
-  type = "list"
+  type = list(string)
 
   default = [
     "10.0.128.0/22",
@@ -37,6 +42,7 @@ variable "private_subnet_cidrs" {
 # This is for the template only, you should probably change
 # this behaviour for your own accounts
 variable "iam_account_alias" {
-  type    = "string"
+  type    = string
   default = "account"
 }
+
