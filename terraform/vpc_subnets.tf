@@ -67,7 +67,7 @@ resource "aws_eip" "core_nat_gw_eip" {
 # NAT Gateways for private subnets
 resource "aws_nat_gateway" "core_nat_gw" {
   count         = length(data.aws_availability_zones.available.names)
-  subnet_id     = aws_subnet.private_subnet[count.index].id
+  subnet_id     = aws_subnet.public_subnet[count.index].id
   allocation_id = aws_eip.core_nat_gw_eip[count.index].id
 }
 
@@ -119,4 +119,3 @@ resource "aws_route_table_association" "core_private_route_table_association" {
   subnet_id      = aws_subnet.private_subnet[count.index].id
   route_table_id = aws_route_table.core_private_route_table[count.index].id
 }
-
