@@ -1,19 +1,50 @@
 # AWS Kickstarter
 
-Provisioning AWS IAM users/groups/roles/policies and a core AWS VPC setup using Terraform. This is closely modelled after an [article I wrote a while back about using AWS securily](https://www.thoughtworks.com/insights/blog/using-aws-security-first-class-citizen), just in a single account, to make it a little simpler to try. It should be trivial to extend into a `1+1+n` account setup though.
+This is a comprehensive toolkit for provisioning AWS accounts for a couple of common scenarios [in a secure way](https://www.thoughtworks.com/insights/blog/using-aws-security-first-class-citizen), with best practices applied by default. The kickstarter is using [a set of modules](https://github.com/moritzheiber/terraform-aws-core-modules) which are consistently tested and developed in an ongoing fashion.
 
-## Setup
-
-_Please note: This kickstarter now requires Terraform 0.12!_
+## Prerequisites
 
 The following tools are required:
 
-- [Terraform](https://terraform.io) (**>= 0.12.0**)
-- [awscli](https://aws.amazon.com/cli/) (>= 1.14.21)
-- [awstools](https://github.com/sam701/awstools) (>= 0.13.0)
-- Any [device](https://www.nitrokey.com/) and/or [app](https://f-droid.org/repository/browse/?fdfilter=totp&fdid=net.bierbaumer.otp_authenticator) that supports 2FA/TOTP
+- [Terraform](https://terraform.io) (**>= 0.12.4**)
+- [awscli](https://aws.amazon.com/cli/) (>= 1.15.49)
+- Any device (e.g. a [NitroKey](https://www.nitrokey.com/) or [YubiKey](https://www.yubico.com/product/yubikey-5-nfc)) and/or app (for either [Android](https://f-droid.org/repository/browse/?fdfilter=totp&fdid=net.bierbaumer.otp_authenticator) or [iOS](https://cooperrs.de/othauth.html)) that supports [2FA/TOTP](https://en.wikipedia.org/wiki/Multi-factor_authentication).
+
+_Note: Although AWS [now supports](https://aws.amazon.com/blogs/security/use-yubikey-security-key-sign-into-aws-management-console/) the modern [FIDO2 procotol](https://fidoalliance.org/fido2/) for adding a second factor to your account [it lacks support for the command line](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_u2f_supported_configurations.html), which renders it an unsuable option for most of what you'd either do with this kickstarter or AWS APIs in general._
+
+## Behind the kickstarter
+
+### IAM setup
+The kickstarter is using the paradigm of a MFA-enabled account assumption model, whereas users aren't granted permissions directly for their users, but rather will have to [assume certain roles] in order to carry out activities (e.g. starting workloads, creating resources, saving files etc.). They can do this either in the web console, or, preferably, using the API (e.g. through this kickstarter using Terraform).
+
+### VPC Network design
+
+The VPC setup you're getting with this kickstarter is a classic DMZ-model, whereas resources are never directly exposed to the public Internet but are rather living in their separate zone, segregated from other publicly accessible resources. Ideally, those are only load balancers or edge endpoints, but never actual instances or functions with compute workloads.
+
+<insert-diagram-here>
+
+### AWS Config for auditing (and enforcement) purposes
+
+## Available scenarios
+
+### One IAM account
+
+### Two IAM accounts (or 1+n IAM accounts)
+
+### AWS Config
+
+### VPC
+
+### AWS Config + IAM in one account + VPC
+
+### AWS COnfig + IAM in two accounts (or 1+n) + VPC
 
 ## Credentials setup
+
+## Upcoming scenarios
+
+- cloudtrail
+- state-bucket
 
 ### Initial run
 
