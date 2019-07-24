@@ -17,11 +17,14 @@ _Note: Although AWS [now supports](https://aws.amazon.com/blogs/security/use-yub
 ### IAM setup
 The kickstarter is using the paradigm of a MFA-enabled account assumption model, whereas users aren't granted permissions directly for their users, but rather will have to [assume certain roles] in order to carry out activities (e.g. starting workloads, creating resources, saving files etc.). They can do this either in the web console, or, preferably, using the API (e.g. through this kickstarter using Terraform).
 
+![AWS IAM setup](https://raw.githubusercontent.com/moritzheiber/terraform-aws-core-modules/master/files/aws_iam_setup.png)
+
 ### VPC Network design
 
 The VPC setup you're getting with this kickstarter is a classic DMZ-model, whereas resources are never directly exposed to the public Internet but are rather living in their separate zone, segregated from other publicly accessible resources. Ideally, those are only load balancers or edge endpoints, but never actual instances or functions with compute workloads.
 
-<insert-diagram-here>
+![AWS VPC setup](https://raw.githubusercontent.com/moritzheiber/terraform-aws-core-modules/master/files/aws_vpc.png)
+
 
 ### AWS Config for auditing (and enforcement) purposes
 

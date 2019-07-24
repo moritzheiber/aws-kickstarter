@@ -3,14 +3,14 @@
 # For more options you can set here please refer to the module documentation: https://github.com/moritzheiber/terraform-aws-core-modules
 
 module "iam_users" {
-  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//iam-users?ref=v0.3.5"
+  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//iam-users?ref=v0.3.6"
 
   # This includes some random bits here purely for demonstrational purposes. Please use a distinct unique identifier otherwise!
   iam_account_alias = "my-aws-account-${substr(sha256(file("iam_one_account.tf")), 0, 20)}"
 }
 
 module "iam_resources" {
-  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//iam-resources?ref=v0.3.5"
+  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//iam-resources?ref=v0.3.6"
 
   # Mandatory parameter so we can't skip it
   iam_account_alias = "my-aws-account"
