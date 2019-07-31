@@ -22,6 +22,8 @@ _Note: Any of these scenarios require for you to have at least CLI access to the
 
 Make it your practice to not only read this README but also the relevant Terraform source code files.
 
+To utilize your provisioned resources you need to [configure your AWS CLI properly](docs/create_access_key.md). The same setup will also work for Terraform, or any other application that's using the AWS SDKs (just make sure to specify the right `AWS_PROFILE`).
+
 ### One IAM account
 
 Located in [`scenarios/iam_one_account`](scenarios/iam_one_account).
