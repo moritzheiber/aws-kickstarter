@@ -26,19 +26,15 @@ variable "set_iam_account_alias" {
   default     = false
 }
 
-# These two users will be created as a part of this initial example
-# You can add as many users as you want, but be weiry of using lists or maps
-# as their index will remove users once you have to offboard a team member
-# This will probably remain the same until Terraform supports for_each for resources
-# Reference: https://github.com/hashicorp/terraform/issues/17179
-variable "admin_name" {
-  type        = string
-  description = "The name of the administrator this module adds to the IAM definitions"
-  default     = "admin"
-}
-
-variable "user_name" {
-  type        = string
-  description = "The name of the user this module adds to the IAM definitions"
-  default     = "user"
+variable "iam_users" {
+  type        = map(map(list(string)))
+  description = "A list of users you want to create inside the \"users\" account"
+  default = {
+    admin = {
+      groups = ["admins"]
+    }
+    user = {
+      groups = ["users"]
+    }
+  }
 }

@@ -6,7 +6,7 @@ This is a comprehensive toolkit for provisioning AWS accounts for a couple of co
 
 The following tools are required:
 
-- [Terraform](https://terraform.io) (**>= 0.12.4**)
+- [Terraform](https://terraform.io) (**>= 0.12.6**)
 - [awscli](https://aws.amazon.com/cli/) (>= 1.15.49)
 - Any device (e.g. a [NitroKey](https://www.nitrokey.com/) or [YubiKey](https://www.yubico.com/product/yubikey-5-nfc)) and/or app (for either [Android](https://f-droid.org/repository/browse/?fdfilter=totp&fdid=net.bierbaumer.otp_authenticator) or [iOS](https://cooperrs.de/othauth.html)) that supports [2FA/TOTP](https://en.wikipedia.org/wiki/Multi-factor_authentication).
 
