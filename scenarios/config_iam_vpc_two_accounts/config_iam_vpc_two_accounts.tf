@@ -11,7 +11,7 @@ provider "aws" {
 }
 
 module "iam_users" {
-  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//iam-users?ref=v0.3.12"
+  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//iam-users?ref=v0.3.14"
   providers = {
     aws = aws.users
   }
@@ -23,7 +23,7 @@ module "iam_users" {
 }
 
 module "iam_resources" {
-  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//iam-resources?ref=v0.3.12"
+  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//iam-resources?ref=v0.3.14"
   providers = {
     aws = aws.resources
   }
@@ -33,7 +33,7 @@ module "iam_resources" {
   users_account_id  = var.users_account_id
 }
 module "config" {
-  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//config?ref=v0.3.12"
+  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//config?ref=v0.3.14"
   providers = {
     aws = aws.resources
   }
@@ -43,7 +43,7 @@ module "config" {
 }
 
 module "core_vpc" {
-  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//vpc?ref=v0.3.12"
+  source = "git::https://github.com/moritzheiber/terraform-aws-core-modules.git//vpc?ref=v0.3.14"
   providers = {
     aws = aws.resources
   }
