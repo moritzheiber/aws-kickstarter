@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    uses: moritzheiber/terraform-aws-core-modules/.github/workflows/test.yaml@main
+    uses: moritzheiber/aws-kickstarter/.github/workflows/test.yaml@main
   create-release:
     needs: [test]
     runs-on: ubuntu-20.04
