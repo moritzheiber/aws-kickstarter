@@ -30,16 +30,9 @@ func TestConfigModule(t *testing.T) {
 		defer terraform.Destroy(t, options)
 		terraform.InitAndApply(t, options)
 
-		ConfigS3BucketID := terraform.Output(t, options, "config_s3_bucket_id")
+		ConfigS3BucketARN := terraform.Output(t, options, "config_s3_bucket_arn")
 
 		// The prefix we've given should match
-		assert.Contains(t, ConfigS3BucketID, bucketPrefix)
-
-		// The S3 bucket should actually exist
-		aws.AssertS3BucketExists(
-			t,
-			awsRegion,
-			ConfigS3BucketID,
-		)
+		assert.Contains(t, ConfigS3BucketARN, bucketPrefix)
 	})
 }

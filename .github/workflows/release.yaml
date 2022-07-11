@@ -1,0 +1,21 @@
+name: Release new version
+on:
+  push:
+    branches:
+      - "!*"
+    tags:
+      - "v*.*.*"
+
+jobs:
+  test:
+    uses: moritzheiber/terraform-aws-core-modules/.github/workflows/test.yaml@main
+  create-release:
+    needs: [test]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: false
+          generate_release_notes: true

@@ -1,0 +1,10 @@
+name: Test on push or PR
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    uses: moritzheiber/terraform-aws-core-modules/.github/workflows/test.yaml@main

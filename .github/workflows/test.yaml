@@ -1,0 +1,41 @@
+name: Test
+on:
+  workflow_call:
+
+jobs:
+  lint-validate:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+      - name: Init
+        run: terraform init
+      - name: Validate
+        run: terraform validate
+      - name: tfsec
+        uses: aquasecurity/tfsec-action@v1.0.2
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v2
+      - name: Install tflint plugins
+        run: tflint --init
+      - name: Lint Terraform files
+        run: tflint
+  terratest:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: tests
+    services:
+      localstack:
+        image: localstack/localstack
+        ports:
+          - 4566:4566
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+      - uses: actions/setup-go@v3
+      - run: echo ../scenarios/config | xargs -n 1 cp mocks/mock_provider.tf
+      - name: terratest
+        run: go test

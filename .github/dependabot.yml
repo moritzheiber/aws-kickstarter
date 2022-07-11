@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "terraform"
+    directory: "/scenarios"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:00"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "09:00"
+  - package-ecosystem: "gomod"
+    directory: "/tests"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "09:00"
