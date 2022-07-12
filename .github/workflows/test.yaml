@@ -36,6 +36,6 @@ jobs:
         with:
           terraform_wrapper: false
       - uses: actions/setup-go@v3
-      - run: echo ../scenarios/config | xargs -n 1 cp mocks/mock_provider.tf
+      - run: echo ../scenarios/config ../scenarios/config_iam_vpc_one_account | xargs -n 1 cp mocks/mock_provider.tf
       - name: terratest
         run: go test
