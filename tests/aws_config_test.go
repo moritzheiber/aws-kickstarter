@@ -15,9 +15,6 @@ func TestConfigModule(t *testing.T) {
 	t.Run("aws_config", func(t *testing.T) {
 		options := &terraform.Options{
 			TerraformDir: "../scenarios/config",
-			Vars: map[string]interface{}{
-				"bucket_prefix": bucketPrefix,
-			},
 			EnvVars: map[string]string{
 				"AWS_DEFAULT_REGION": awsRegion,
 				"AWS_REGION":         awsRegion,
