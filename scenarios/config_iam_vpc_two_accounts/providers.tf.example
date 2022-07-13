@@ -1,0 +1,22 @@
+/**
+*
+* This is an alias configuration which will work if you're passing the right kind of credentials to each of them
+* It will _not_ work right out of the box. The recommended way would be to pass a shared profile to each of these providers using the `profile` variable.
+* 
+* Please [refer to the Terraform documentation for using multiple providers](https://www.terraform.io/language/providers/configuration#alias-multiple-provider-configurations=) and [the AWS documentation on how to specify credentials](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
+* _Note: You must not use environment variables for multiple providers, it's not possible._
+*
+* 
+* ```hcl
+* provider "aws" {
+*   alias = "users"
+*   profile = "users-profile-name"
+* }
+* 
+* provider "aws" {
+*   alias = "resources"
+*   profile = "resources-profile-name"
+* }
+* ```
+*
+*/

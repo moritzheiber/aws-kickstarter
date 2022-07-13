@@ -26,10 +26,16 @@ jobs:
       run:
         working-directory: tests
     services:
-      localstack:
+      localstack-first-account:
         image: localstack/localstack
         ports:
           - 4566:4566
+      localstack-second-account:
+        image: localstack/localstack
+        env:
+          EDGE_PORT: 4567
+        ports:
+          - 4567:4567
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
@@ -37,5 +43,6 @@ jobs:
           terraform_wrapper: false
       - uses: actions/setup-go@v3
       - run: echo ../scenarios/config ../scenarios/config_iam_vpc_one_account | xargs -n 1 cp mocks/mock_provider.tf
+      - run: echo ../scenarios/config_iam_vpc_two_accounts | xargs -n 1 cp mocks/two_mock_providers.tf
       - name: terratest
         run: go test
