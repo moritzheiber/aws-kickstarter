@@ -1,7 +1,7 @@
 /.terraform
 /*/.terraform
 /**/.terraform
-/**/*/mock_provider.tf
+/**/*/*mock_provider*.tf
 /**/*/*.tfstate*
-!/tests/mocks/mock_provider.tf
+!/tests/mocks/*mock_provider*.tf
 /**/*.lock.hcl
