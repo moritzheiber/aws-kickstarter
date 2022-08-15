@@ -10,7 +10,7 @@ import (
 func TestConfigIamVpcTwoAccountsModule(t *testing.T) {
 	awsRegion := aws.GetRandomStableRegion(t, []string{allowedRegion}, nil)
 
-	t.Run("aws_config", func(t *testing.T) {
+	t.Run("aws_config_iam_vpc_two_accounts", func(t *testing.T) {
 		options := &terraform.Options{
 			TerraformDir: "../scenarios/config_iam_vpc_two_accounts",
 			EnvVars: map[string]string{
