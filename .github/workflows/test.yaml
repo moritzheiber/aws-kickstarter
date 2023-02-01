@@ -13,7 +13,7 @@ jobs:
       - name: Validate
         run: terraform validate
       - name: tfsec
-        uses: aquasecurity/tfsec-action@v1.0.2
+        uses: aquasecurity/tfsec-action@v1.0.3
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v2
       - name: Install tflint plugins
